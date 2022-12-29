@@ -1,0 +1,3 @@
+enum MenuType{
+  emoji,gif
+}
