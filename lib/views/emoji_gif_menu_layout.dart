@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EmojiGifMenuLayout extends StatelessWidget {
-  Widget child;
+  final Widget child;
   EmojiGifMenuLayout({super.key, required this.child}) {
     Get.put(MenuStateController());
   }

@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:platform_info/platform_info.dart';
-
 import '../models/menu_design.dart';
 
 class EmojiGifMenuColumn extends StatelessWidget {
 
-  bool isKeyboardOpened = false;
+  final bool isKeyboardOpened = false;
+
+  const EmojiGifMenuColumn({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MenuStateController>(builder: (controller) {
