@@ -122,7 +122,7 @@ EmojiGifPickerIcon(
 
 ## Back Button Problem
 
-<img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_backbutton.gif"> 
+<img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_backbutton.gif" width=200> 
 
 When the back button is pressed while the emoji-gif picker menu is open, the menu should close instead of changing the page. You must wrap your scaffold with WillPopScope to solve this problem
 
@@ -265,10 +265,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ## Customizable
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/FlutterWay/files/main/light.JPG"> 
-<img src="https://raw.githubusercontent.com/FlutterWay/files/main/dark.JPG"> 
-</p>
+
+<div style="text-align: center">
+    <table>
+        <tr>
+            <td style="text-align: center">
+                <table>
+                 <tr>
+                 	<h2>Light</h2>
+                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/light.JPG"/>
+                  </tr>
+                </table>
+            </td>   
+            <td style="text-align: center">
+                <table>
+                 <tr>
+                 	<h2>Dark</h2>
+                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/dark.JPG"/>
+                  </tr>
+                </table>
+            </td>   
+        </tr> 
+    </table>
+</div>
 
 There is a panel called EmojiGifPickerPanel to edit the design. 
 You can customize the features below
