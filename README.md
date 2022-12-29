@@ -1,23 +1,20 @@
 # flutter_emoji_gif_picker
-The same emoji-gif picker as whatsapp. Takes the same size as your keyboard(Mobile).
+An emoji picker that was designed based on WhatsApp's picker model. Provides same functionalities with an easy usage.
 
 <img width=1200 src="https://raw.githubusercontent.com/FlutterWay/files/main/slideForEmojiPicker.png"> 
-
 
 ## Features 
 - Includes Emoji Icon Widget, Textfield
 - Includes Gif menu(via Giphy Api)
 - Ready to use Dark/Light Mode
-- All keyboard problems solved. Ready to use without worrying about keyboard issues
-- Back Button Event working same as whatsapp
+- Freed of known keyboard issues of other emoji pickers
+- Back Button Event with same functionality as WhatsApp
 - All platforms are supported
 - Lightweight
-- Loading quickly
+- Instant loading times
 - Customizable design
-- This package is designed based on whatsapp emoji button
-- Search bar for emoji/gif 
-- Optionally the menu can resize or not resize the page
-
+- Search bar for emoji / gif 
+- Page resizing option with menu is provided
 
 <div style="text-align: center">
     <table>
@@ -45,7 +42,7 @@ The same emoji-gif picker as whatsapp. Takes the same size as your keyboard(Mobi
 ## Getting Started
 
 ### Basic Setup
-It's ready to use. Just pick your dark/light mode and set your giphyApiKey. Without giphyApiKey, the gif menu won't show.
+It's simple and ready to use. Pick either dark / light mode and set your giphyApiKey. GiphyApiKey is required for gif menu to function / show.
 ```dart
 EmojiGifPickerPanel.setup(
     giphyApiKey: "yourgiphyapikey", mode: Mode.light);
@@ -102,8 +99,8 @@ return MaterialApp(
 );
 ```
 
-## Column View or Stack View ???
-Changes the size of the application when the keyboard is opened. Do you want Emoji Picker to work the same way? Then wrap your design with EmojiGifMenuLayout and set fromStack:false in your picker icon widget.
+## Should Emoji-Gif picker resize your page ?
+If you want your emoji-gif picker to resize your page when opened, your page needs to be wrapped with EmojiGifMenuLayout and set fromStack:false in your picker icon widget. Otherwise emoji-gif picker will cover its own space on your page
 
 ```dart
 EmojiGifMenuLayout(
@@ -124,7 +121,7 @@ EmojiGifPickerIcon(
 
 <img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_backbutton.gif" width=200> 
 
-When the back button is pressed while the emoji-gif picker menu is open, the menu should close instead of changing the page. You must wrap your scaffold with WillPopScope to solve this problem
+When the back button is pressed, if you want your emoji-gif picker menu to close instead of switching to another page, you must wrap your scaffold with WillPopScope to achieve this functionality
 
 ```dart
 return WillPopScope(
@@ -136,9 +133,8 @@ return WillPopScope(
 
 ## EmojiGifPickerIcon & EmojiGifTextfield
 
-You have to use these widgets to show picker menu.
-You should give an id to your picker widgets. This way you can use these widgets in multiple places on the same page.
-Don't forget to give your TextEditingController in EmojiGifPickerIcon.
+These widgets are required in order to show picker menu.
+Give an id to your picker widget this way you can use these widgets in multiple places on the same page. Don't forget to give your TextEditingController in  EmojiGifPickerIcon.
 
 ### Icon
 ```dart
@@ -192,7 +188,7 @@ import 'package:emoji_gif_picker_menu/emoji_gif_picker_menu.dart';
 
 void main() {
   EmojiGifPickerPanel.setup(
-      giphyApiKey: "kPBosXOgMBPUQQLSlKXQbKFn7EU2sh6p", mode: Mode.light);
+      giphyApiKey: "yourgiphyapikey", mode: Mode.light);
   runApp(const MyApp());
 }
 
@@ -265,7 +261,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ## Customizable
 
-
 <div style="text-align: center">
     <table>
         <tr>
@@ -289,8 +284,7 @@ class _MyHomePageState extends State<MyHomePage> {
     </table>
 </div>
 
-There is a panel called EmojiGifPickerPanel to edit the design. 
-You can customize the features below
+EmojiGifPickerPanel is a panel that allows you to edit the design to your liking. You can customize the features as shown below :
 - Position
 ```dart
 EmojiGifPickerPanel.setPosition(MenuPosition(bottom: 0));
@@ -331,7 +325,7 @@ EmojiGifPickerPanel.setTexts(MenuTexts(
       searchBarTextStyle: const TextStyle(fontSize: 12, color: Colors.black)));
 ```
 
-## Thanks to
+## This package was possible to create with :
 - The [emoji_picker_flutter](https://pub.dev/packages/emoji_picker_flutter) package
 - The [flutter_keyboard_size](https://pub.dev/packages/flutter_keyboard_size) package
 - The [giphy_api_client](https://pub.dev/packages/giphy_api_client) package
