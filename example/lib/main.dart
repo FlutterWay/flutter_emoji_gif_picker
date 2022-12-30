@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 EmojiGifPickerBuilder(
                   id: "1",
                   builder: ((isMenuOpened) {
-                    return SizedBox();
+                    return const SizedBox();
                   }),
                 ),
                 SizedBox(
