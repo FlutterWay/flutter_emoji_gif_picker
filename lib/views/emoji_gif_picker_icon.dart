@@ -8,38 +8,43 @@ import 'package:giphy_api_client/giphy_api_client.dart';
 import 'package:platform_info/platform_info.dart';
 
 class EmojiGifPickerIcon extends StatefulWidget {
-  Function()? onBackSpacePressed;
-  void Function(Category? category, Emoji emoji)? onEmojiSelected;
-  void Function(GiphyGif? gif)? onGifSelected;
+  /// If is there any textfield that should be worked with this icon, you must give it's TextEditingController and id as a parameter
+  /// Give same id with your EmojiTextField
+  final Function()? onBackSpacePressed;
+  final void Function(Category? category, Emoji emoji)? onEmojiSelected;
+  final void Function(GiphyGif? gif)? onGifSelected;
   final Icon icon;
-  String id;
-  TextEditingController? controller;
-  Widget? keyboardIcon;
-  late Color hoveredBackgroundColor;
-  Color? backgroundColor;
-  late bool fromStack;
+  final String id;
+  final TextEditingController? controller;
+  final Widget keyboardIcon;
+  final Color hoveredBackgroundColor;
+  final Color? backgroundColor;
+  final bool fromStack;
   EmojiGifPickerIcon(
       {super.key,
       this.onBackSpacePressed,
       this.onEmojiSelected,
       this.onGifSelected,
-      this.keyboardIcon,
+      Widget? keyboardIcon,
       required this.id,
       this.controller,
       bool? fromStack,
       required this.icon,
       Color? hoveredBackgroundColor,
-      Color? backgroundColor}) {
-    this.hoveredBackgroundColor = hoveredBackgroundColor ??
-        Get.find<MenuStateController>().menuColors.iconHoveredBackgroundColor;
-    this.fromStack = fromStack ?? (Platform.I.isMobile ? false : true);
-    keyboardIcon = keyboardIcon ??
-        Icon(
-          Icons.keyboard,
-          size: icon.size,
-          color: icon.color,
-        );
-  }
+      Color? backgroundColor})
+      : fromStack = fromStack ?? (Platform.I.isMobile ? false : true),
+        hoveredBackgroundColor = hoveredBackgroundColor ??
+            Get.find<MenuStateController>()
+                .menuColors
+                .iconHoveredBackgroundColor,
+        backgroundColor = backgroundColor ??
+            Get.find<MenuStateController>().menuColors.iconBackgroundColor,
+        keyboardIcon = keyboardIcon ??
+            Icon(
+              Icons.keyboard,
+              size: icon.size,
+              color: icon.color,
+            );
 
   @override
   State<EmojiGifPickerIcon> createState() => _EmojiGifPickerIconState();
@@ -147,17 +152,15 @@ class _EmojiGifPickerIconState extends State<EmojiGifPickerIcon> {
   }
 }
 
-const AUTO_ID_ALPHABET =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-const AUTO_ID_LENGTH = 20;
 String getRandId() {
+  const alphabet =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const length = 20;
   final buffer = StringBuffer();
   final random = Random.secure();
 
-  final maxRandom = AUTO_ID_ALPHABET.length;
-
-  for (int i = 0; i < AUTO_ID_LENGTH; i++) {
-    buffer.write(AUTO_ID_ALPHABET[random.nextInt(maxRandom)]);
+  for (int i = 0; i < length; i++) {
+    buffer.write(alphabet[random.nextInt(length)]);
   }
   return buffer.toString();
 }

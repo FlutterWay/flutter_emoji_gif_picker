@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_emoji_gif_picker/flutter_emoji_gif_picker.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         return Stack(
           children: [
             child!,
-            EmojiGifMenuStack(),
+            const EmojiGifMenuStack(),
           ],
         );
       },
@@ -54,7 +55,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   onGifSelected: (gif) {},
                   fromStack: false,
                   controller: controller,
-                  icon: Icon(Icons.emoji_emotions),
+                  icon: const Icon(Icons.emoji_emotions),
+                ),
+                EmojiGifPickerBuilder(
+                  id: "1",
+                  builder: ((isMenuOpened) {
+                    return SizedBox();
+                  }),
                 ),
                 SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
@@ -62,10 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       id: "1",
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: const BorderSide(color: Colors.black),
                             borderRadius: BorderRadius.circular(30)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
+                            borderSide: const BorderSide(color: Colors.blue),
                             borderRadius: BorderRadius.circular(30)),
                       ),
                     )),

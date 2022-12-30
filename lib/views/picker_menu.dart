@@ -7,15 +7,17 @@ import 'package:giphy_api_client/giphy_api_client.dart';
 import 'package:platform_info/platform_info.dart';
 
 class PickerMenu extends StatelessWidget {
-  late MenuColors colors;
-  late MenuStyles styles;
-  late MenuTexts texts;
-  String? giphyApiKey;
-  MenuSizes sizes;
-  Function()? onBackSpacePressed;
-  void Function(Category? category, Emoji emoji)? onEmojiSelected;
-  void Function(GiphyGif? gif)? onGifSelected;
-  TextEditingController? textEditingController;
+  /// This is your Emoji Gif Picker that will be shown
+
+  final MenuColors colors;
+  final MenuStyles styles;
+  final MenuTexts texts;
+  final String? giphyApiKey;
+  final MenuSizes sizes;
+  final Function()? onBackSpacePressed;
+  final void Function(Category? category, Emoji emoji)? onEmojiSelected;
+  final void Function(GiphyGif? gif)? onGifSelected;
+  final TextEditingController? textEditingController;
   PickerMenu(
       {super.key,
       MenuColors? colors,
@@ -26,11 +28,10 @@ class PickerMenu extends StatelessWidget {
       this.onGifSelected,
       this.textEditingController,
       this.giphyApiKey,
-      required this.sizes}) {
-    this.colors = colors ?? MenuColors();
-    this.styles = styles ?? MenuStyles();
-    this.texts = texts ?? MenuTexts();
-  }
+      required this.sizes})
+      : colors = colors ?? MenuColors(),
+        styles = styles ?? MenuStyles(),
+        texts = texts ?? MenuTexts();
 
   @override
   Widget build(BuildContext context) {

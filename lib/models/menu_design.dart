@@ -45,7 +45,7 @@ class MenuColors {
       searchBarEnabledColor = backgroundColor;
       searchBarFocusedColor = const Color(0xFF00a884);
       buttonColor = const Color(0xFF7d7d7d);
-      iconHoveredBackgroundColor = Color.fromARGB(255, 75, 75, 75);
+      iconHoveredBackgroundColor = const Color.fromARGB(255, 75, 75, 75);
       menuSelectedIconColor = const Color(0xFF037e69);
       indicatorColor = Colors.transparent;
     } else {
@@ -69,7 +69,7 @@ class MenuColors {
       searchBarFocusedColor = const Color(0xFF00a884);
       buttonColor = const Color(0xFF909090);
       iconHoveredBackgroundColor = const Color.fromARGB(255, 224, 224, 224);
-      menuSelectedIconColor = Color.fromARGB(255, 42, 219, 187);
+      menuSelectedIconColor = const Color.fromARGB(255, 42, 219, 187);
       indicatorColor = Colors.transparent;
     } else {
       backgroundColor = const Color(0xFFe9edf0);

@@ -9,7 +9,11 @@ import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
 import 'emoji_gif_picker_builder.dart';
 
 class EmojiGifTextField extends StatelessWidget {
-  EmojiGifTextField({
+  /// Creates a Material Design text field.
+  /// Id is required to connect with emoji icon
+  /// When you click the connected emoji icon, this textfield will be focused directly
+  /// You can change the autofocus as you like
+  const EmojiGifTextField({
     super.key,
     required this.id,
     this.decoration = const InputDecoration(),
@@ -61,27 +65,18 @@ class EmojiGifTextField extends StatelessWidget {
     this.restorationId,
     this.scribbleEnabled = true,
     this.enableIMEPersonalizedLearning = true,
-  })  : assert(textAlign != null),
-        assert(autofocus != null),
-        assert(obscuringCharacter != null && obscuringCharacter.length == 1),
-        assert(obscureText != null),
-        assert(autocorrect != null),
+  })  : 
+        assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
         smartQuotesType = smartQuotesType ??
             (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
-        assert(enableSuggestions != null),
-        assert(scrollPadding != null),
-        assert(dragStartBehavior != null),
-        assert(selectionHeightStyle != null),
-        assert(selectionWidthStyle != null),
         assert(maxLines == null || maxLines > 0),
         assert(minLines == null || minLines > 0),
         assert(
           (maxLines == null) || (minLines == null) || (maxLines >= minLines),
           "minLines can't be greater than maxLines",
         ),
-        assert(expands != null),
         assert(
           !expands || (maxLines == null && minLines == null),
           'minLines and maxLines must be null when expands is true.',
@@ -98,10 +93,9 @@ class EmojiGifTextField extends StatelessWidget {
               !identical(keyboardType, TextInputType.text),
           'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
         ),
-        assert(clipBehavior != null),
-        assert(enableIMEPersonalizedLearning != null),
         keyboardType = keyboardType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
+
 
   final String id;
   final InputDecoration? decoration;
@@ -123,7 +117,6 @@ class EmojiGifTextField extends StatelessWidget {
   final int? maxLines;
   final int? minLines;
   final bool expands;
-  ToolbarOptions? toolbarOptions;
   static const int noMaxLength = -1;
   final int? maxLength;
   final MaxLengthEnforcement? maxLengthEnforcement;
@@ -141,10 +134,8 @@ class EmojiGifTextField extends StatelessWidget {
   final ui.BoxWidthStyle selectionWidthStyle;
   final Brightness? keyboardAppearance;
   final EdgeInsets scrollPadding;
-  bool? enableInteractiveSelection;
   final TextSelectionControls? selectionControls;
   final DragStartBehavior dragStartBehavior;
-  bool get selectionEnabled => enableInteractiveSelection!;
   final GestureTapCallback? onTap;
   final MouseCursor? mouseCursor;
   final InputCounterWidgetBuilder? buildCounter;
@@ -161,6 +152,8 @@ class EmojiGifTextField extends StatelessWidget {
     return EmojiGifPickerBuilder(
         id: id,
         builder: (isMenuOpened) {
+          ToolbarOptions? toolbarOptions;
+          bool? enableInteractiveSelection;
           bool readOnly = Platform.I.isMobile ? isMenuOpened : false;
           bool? showCursor = isMenuOpened ? true : null;
           TextEditingController? controller =
@@ -174,30 +167,29 @@ class EmojiGifTextField extends StatelessWidget {
               : null;
           enableInteractiveSelection =
               enableInteractiveSelection ?? (!readOnly || !obscureText);
-          toolbarOptions = toolbarOptions ??
-              (obscureText
-                  ? (readOnly
-                      // No point in even offering "Select All" in a read-only obscured
-                      // field.
-                      ? const ToolbarOptions()
-                      // Writable, but obscured.
-                      : const ToolbarOptions(
-                          selectAll: true,
-                          paste: true,
-                        ))
-                  : (readOnly
-                      // Read-only, not obscured.
-                      ? const ToolbarOptions(
-                          selectAll: true,
-                          copy: true,
-                        )
-                      // Writable, not obscured.
-                      : const ToolbarOptions(
-                          copy: true,
-                          cut: true,
-                          selectAll: true,
-                          paste: true,
-                        )));
+          toolbarOptions = (obscureText
+              ? (readOnly
+                  // No point in even offering "Select All" in a read-only obscured
+                  // field.
+                  ? const ToolbarOptions()
+                  // Writable, but obscured.
+                  : const ToolbarOptions(
+                      selectAll: true,
+                      paste: true,
+                    ))
+              : (readOnly
+                  // Read-only, not obscured.
+                  ? const ToolbarOptions(
+                      selectAll: true,
+                      copy: true,
+                    )
+                  // Writable, not obscured.
+                  : const ToolbarOptions(
+                      copy: true,
+                      cut: true,
+                      selectAll: true,
+                      paste: true,
+                    )));
           return TextField(
             controller: controller,
             focusNode: focusNode,

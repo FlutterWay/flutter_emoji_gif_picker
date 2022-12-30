@@ -7,15 +7,15 @@ import 'package:platform_info/platform_info.dart';
 import '../models/menu.dart';
 
 class PickerMenuDesktop extends StatefulWidget {
-  late MenuColors colors;
-  late MenuStyles styles;
-  late MenuTexts texts;
-  String? giphyApiKey;
-  MenuSizes sizes;
-  Function()? onBackSpacePressed;
-  void Function(Category? category, Emoji emoji)? onEmojiSelected;
-  void Function(GiphyGif? gif)? onGifSelected;
-  TextEditingController? textEditingController;
+  final MenuColors colors;
+  final MenuStyles styles;
+  final MenuTexts texts;
+  final String? giphyApiKey;
+  final MenuSizes sizes;
+  final Function()? onBackSpacePressed;
+  final void Function(Category? category, Emoji emoji)? onEmojiSelected;
+  final void Function(GiphyGif? gif)? onGifSelected;
+  final TextEditingController? textEditingController;
   PickerMenuDesktop(
       {super.key,
       MenuColors? colors,
@@ -26,14 +26,15 @@ class PickerMenuDesktop extends StatefulWidget {
       this.onGifSelected,
       this.textEditingController,
       this.giphyApiKey,
-      required this.sizes}) {
-    this.colors = colors ?? MenuColors();
-    this.styles = styles ?? MenuStyles();
-    this.texts = texts ?? MenuTexts();
-  }
+      required this.sizes}):
+    colors = colors ?? MenuColors(),
+    styles = styles ?? MenuStyles(),
+    texts = texts ?? MenuTexts();
 
   @override
-  State<PickerMenuDesktop> createState() => _PickerMenuState();
+  State<PickerMenuDesktop> createState() {
+    return _PickerMenuState();
+  }
 }
 
 class _PickerMenuState extends State<PickerMenuDesktop> {
@@ -273,7 +274,7 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
       width: double.infinity,
       height: double.infinity,
       padding: Platform.I.isMobile
-          ? EdgeInsets.only(top: 4, left: 2, right: 2)
+          ? const EdgeInsets.only(top: 4, left: 2, right: 2)
           : null,
       child: gifs == null
           ? const Center(child: CircularProgressIndicator())

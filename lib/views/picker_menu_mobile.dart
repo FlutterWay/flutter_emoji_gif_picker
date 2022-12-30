@@ -9,15 +9,15 @@ import 'package:platform_info/platform_info.dart';
 import '../models/menu.dart';
 
 class PickerMenuMobile extends StatefulWidget {
-  late MenuColors colors;
-  late MenuStyles styles;
-  late MenuTexts texts;
-  String? giphyApiKey;
-  MenuSizes sizes;
-  Function()? onBackSpacePressed;
-  void Function(Category? category, Emoji emoji)? onEmojiSelected;
-  void Function(GiphyGif? gif)? onGifSelected;
-  TextEditingController? textEditingController;
+  final MenuColors colors;
+  final MenuStyles styles;
+  final MenuTexts texts;
+  final String? giphyApiKey;
+  final MenuSizes sizes;
+  final Function()? onBackSpacePressed;
+  final void Function(Category? category, Emoji emoji)? onEmojiSelected;
+  final void Function(GiphyGif? gif)? onGifSelected;
+  final TextEditingController? textEditingController;
   PickerMenuMobile(
       {super.key,
       MenuColors? colors,
@@ -28,11 +28,10 @@ class PickerMenuMobile extends StatefulWidget {
       this.onGifSelected,
       this.textEditingController,
       this.giphyApiKey,
-      required this.sizes}) {
-    this.colors = colors ?? MenuColors();
-    this.styles = styles ?? MenuStyles();
-    this.texts = texts ?? MenuTexts();
-  }
+      required this.sizes})
+      : colors = colors ?? MenuColors(),
+        styles = styles ?? MenuStyles(),
+        texts = texts ?? MenuTexts();
 
   @override
   State<PickerMenuMobile> createState() => _PickerMenuState();
@@ -97,7 +96,7 @@ class _PickerMenuState extends State<PickerMenuMobile> {
                 width: widget.sizes.width,
                 height: widget.sizes.iconSize * 2.3,
                 color: widget.colors.searchBarBackgroundColor,
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: GetBuilder<MobileSearchBarController>(builder: (_) {
                   return viewMobileSearchBar();
                 }),
@@ -298,7 +297,7 @@ class _PickerMenuState extends State<PickerMenuMobile> {
         emojiSizeMax: 32 *
             (Platform.I.isIOS
                 ? 1.30
-                : 1.0), // Issue: https://github.com/flutter/flutter/issues/28894
+                : 1.0), 
         verticalSpacing: 0,
         horizontalSpacing: 0,
         gridPadding: EdgeInsets.zero,
@@ -331,7 +330,7 @@ class _PickerMenuState extends State<PickerMenuMobile> {
       width: double.infinity,
       height: double.infinity,
       padding: Platform.I.isMobile
-          ? EdgeInsets.only(top: 4, left: 2, right: 2)
+          ? const EdgeInsets.only(top: 4, left: 2, right: 2)
           : null,
       child: gifs == null
           ? const Center(child: CircularProgressIndicator())

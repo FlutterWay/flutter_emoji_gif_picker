@@ -8,7 +8,7 @@ class KeyboardProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardSizeProvider(
-      child: child ?? SizedBox(),
+      child: child ?? const SizedBox(),
     );
   }
 }

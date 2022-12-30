@@ -9,7 +9,35 @@ import 'package:platform_info/platform_info.dart';
 import '../models/menu_design.dart';
 
 class EmojiGifMenuStack extends StatelessWidget {
-  bool isKeyboardOpened = false;
+  
+   /// EmojiGifMenuStack should be put inside the Stack structure
+   /// 
+   /// This allows the Emoji-Gif-Picker-Menu to be shown at screen
+   /// 
+   /// This allows the Emoji-Gif-Picker-Menu to be shown at screen
+   /// 
+   /// Put inside your MaterialApp
+   /// 
+   /// Widget build(BuildContext context) {
+   /// 
+   ///  return MaterialApp(
+   /// 
+   ///    builder: (context, child) {
+   /// 
+   ///      return Stack(
+   /// 
+   ///        children: [
+   ///          child!,
+   ///          const EmojiGifMenuStack(),
+   ///        ],
+   ///      );
+   ///    },
+   /// 
+   ///    home: const MyHomePage(),
+   ///  );
+   /// }
+   
+  const EmojiGifMenuStack({super.key});
   @override
   Widget build(BuildContext context) {
     return KeyboardSizeProvider(
@@ -44,7 +72,7 @@ class EmojiGifMenuStack extends StatelessWidget {
                                       styles: controller.menuStyles,
                                       texts: controller.menuTexts,
                                       giphyApiKey: controller.giphyApiKey))
-                          : SizedBox();
+                          : const SizedBox();
                     }));
                   })))
         ],

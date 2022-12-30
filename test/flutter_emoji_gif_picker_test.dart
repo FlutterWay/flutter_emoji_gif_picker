@@ -1,6 +1,3 @@
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_emoji_gif_picker/flutter_emoji_gif_picker.dart';
 
 void main() {
   //test('adds one to input values', () {

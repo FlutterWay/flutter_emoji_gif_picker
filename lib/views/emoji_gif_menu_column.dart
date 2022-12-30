@@ -7,6 +7,7 @@ import 'package:platform_info/platform_info.dart';
 import '../models/menu_design.dart';
 
 class EmojiGifMenuColumn extends StatelessWidget {
+  /// EmojiGifMenuColumn will be openning at bottom of EmojiGifMenuLayout
 
   final bool isKeyboardOpened = false;
 
@@ -27,7 +28,7 @@ class EmojiGifMenuColumn extends StatelessWidget {
               styles: controller.menuStyles,
               texts: controller.menuTexts,
               giphyApiKey: controller.giphyApiKey)
-          : SizedBox();
+          : const SizedBox();
     });
   }
 
