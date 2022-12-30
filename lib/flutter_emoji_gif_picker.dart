@@ -19,9 +19,9 @@ enum Mode { dark, light }
 class EmojiGifPickerPanel {
   /// You dont need to customize your emoji gif picker.
   /// But you can customize almost everything in it.
-  /// 
+  ///
   /// Don't forget to put onWillPop to your Scaffold's onWillPop
-  /// 
+  ///
   /// You can close, open menu or get status of menu.
 
   static void setup({

@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EmojiGifMenuLayout extends StatelessWidget {
-
   /// EmojiGifMenuLayout puts your design inside a Column
-  /// 
+  ///
   /// If you change your emoji icon widget's fromStack parameter as false and put your design into this, your design will be resized like the keyboard does
-  
+
   final Widget child;
   EmojiGifMenuLayout({super.key, required this.child}) {
     Get.put(MenuStateController());

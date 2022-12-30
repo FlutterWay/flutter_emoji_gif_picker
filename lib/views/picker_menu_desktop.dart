@@ -26,10 +26,10 @@ class PickerMenuDesktop extends StatefulWidget {
       this.onGifSelected,
       this.textEditingController,
       this.giphyApiKey,
-      required this.sizes}):
-    colors = colors ?? MenuColors(),
-    styles = styles ?? MenuStyles(),
-    texts = texts ?? MenuTexts();
+      required this.sizes})
+      : colors = colors ?? MenuColors(),
+        styles = styles ?? MenuStyles(),
+        texts = texts ?? MenuTexts();
 
   @override
   State<PickerMenuDesktop> createState() {

@@ -5,7 +5,11 @@
 ## 0.0.2
 
 * Changes Made.
-* 
+  
 ## 0.0.3
 
 * Issius solved.
+  
+## 0.0.4
+
+* Files formatted.

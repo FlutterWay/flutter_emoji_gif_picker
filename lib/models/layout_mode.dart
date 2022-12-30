@@ -1,3 +1,1 @@
-enum LayoutMode{
-  stack,column
-}
+enum LayoutMode { stack, column }

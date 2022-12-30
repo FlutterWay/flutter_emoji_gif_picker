@@ -65,8 +65,7 @@ class EmojiGifTextField extends StatelessWidget {
     this.restorationId,
     this.scribbleEnabled = true,
     this.enableIMEPersonalizedLearning = true,
-  })  : 
-        assert(obscuringCharacter.length == 1),
+  })  : assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
         smartQuotesType = smartQuotesType ??
@@ -95,7 +94,6 @@ class EmojiGifTextField extends StatelessWidget {
         ),
         keyboardType = keyboardType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
-
 
   final String id;
   final InputDecoration? decoration;

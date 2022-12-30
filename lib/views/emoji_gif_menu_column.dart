@@ -12,7 +12,7 @@ class EmojiGifMenuColumn extends StatelessWidget {
   final bool isKeyboardOpened = false;
 
   const EmojiGifMenuColumn({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MenuStateController>(builder: (controller) {

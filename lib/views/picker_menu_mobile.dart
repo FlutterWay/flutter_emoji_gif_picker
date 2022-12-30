@@ -294,10 +294,7 @@ class _PickerMenuState extends State<PickerMenuMobile> {
             },
       config: Config(
         columns: 7,
-        emojiSizeMax: 32 *
-            (Platform.I.isIOS
-                ? 1.30
-                : 1.0), 
+        emojiSizeMax: 32 * (Platform.I.isIOS ? 1.30 : 1.0),
         verticalSpacing: 0,
         horizontalSpacing: 0,
         gridPadding: EdgeInsets.zero,

@@ -1,3 +1,1 @@
-enum MenuType{
-  emoji,gif
-}
+enum MenuType { emoji, gif }

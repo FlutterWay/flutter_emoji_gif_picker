@@ -9,34 +9,33 @@ import 'package:platform_info/platform_info.dart';
 import '../models/menu_design.dart';
 
 class EmojiGifMenuStack extends StatelessWidget {
-  
-   /// EmojiGifMenuStack should be put inside the Stack structure
-   /// 
-   /// This allows the Emoji-Gif-Picker-Menu to be shown at screen
-   /// 
-   /// This allows the Emoji-Gif-Picker-Menu to be shown at screen
-   /// 
-   /// Put inside your MaterialApp
-   /// 
-   /// Widget build(BuildContext context) {
-   /// 
-   ///  return MaterialApp(
-   /// 
-   ///    builder: (context, child) {
-   /// 
-   ///      return Stack(
-   /// 
-   ///        children: [
-   ///          child!,
-   ///          const EmojiGifMenuStack(),
-   ///        ],
-   ///      );
-   ///    },
-   /// 
-   ///    home: const MyHomePage(),
-   ///  );
-   /// }
-   
+  /// EmojiGifMenuStack should be put inside the Stack structure
+  ///
+  /// This allows the Emoji-Gif-Picker-Menu to be shown at screen
+  ///
+  /// This allows the Emoji-Gif-Picker-Menu to be shown at screen
+  ///
+  /// Put inside your MaterialApp
+  ///
+  /// Widget build(BuildContext context) {
+  ///
+  ///  return MaterialApp(
+  ///
+  ///    builder: (context, child) {
+  ///
+  ///      return Stack(
+  ///
+  ///        children: [
+  ///          child!,
+  ///          const EmojiGifMenuStack(),
+  ///        ],
+  ///      );
+  ///    },
+  ///
+  ///    home: const MyHomePage(),
+  ///  );
+  /// }
+
   const EmojiGifMenuStack({super.key});
   @override
   Widget build(BuildContext context) {
@@ -44,8 +43,8 @@ class EmojiGifMenuStack extends StatelessWidget {
       child: Overlay(
         initialEntries: [
           OverlayEntry(
-              builder: ((context) =>
-                  Consumer<ScreenHeight>(builder: (context, screenHeight, child) {
+              builder: ((context) => Consumer<ScreenHeight>(
+                      builder: (context, screenHeight, child) {
                     updateKeyboardStatus(screenHeight);
                     return GetBuilder<MenuStateController>(
                         builder: ((controller) {
@@ -93,7 +92,7 @@ class EmojiGifMenuStack extends StatelessWidget {
       sizes = controller.menuSizes;
     }
     return Positioned(
-      bottom: controller.isKeyboardOpened?controller.keyboardHeight:0,
+      bottom: controller.isKeyboardOpened ? controller.keyboardHeight : 0,
       child: PickerMenu(
           sizes: sizes,
           onBackSpacePressed: controller.currentMenu!.onBackSpacePressed,

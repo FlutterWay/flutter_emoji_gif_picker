@@ -9,7 +9,8 @@ class EmojiGifPickerBuilder extends StatelessWidget {
 
   final Widget Function(bool isMenuOpened) builder;
   final String id;
-  const EmojiGifPickerBuilder({super.key, required this.builder, required this.id});
+  const EmojiGifPickerBuilder(
+      {super.key, required this.builder, required this.id});
 
   @override
   Widget build(BuildContext context) {
