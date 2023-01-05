@@ -13,3 +13,9 @@
 ## 0.0.4
 
 * Files formatted.
+
+## 0.1.0
+
+* Fixed the problem that the menu remained small(mobile)
+* noRecents widget added in MenuTexts class
+* Fixed menu opening and closing issues

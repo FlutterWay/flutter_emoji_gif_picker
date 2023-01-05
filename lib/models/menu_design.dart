@@ -138,7 +138,11 @@ class MenuPosition {
 
 class MenuTexts {
   String? searchGifHintText, searchEmojiHintText;
-  MenuTexts({String? searchEmojiHintText, String? searchGifHintText}) {
+  Widget? noRecents;
+  MenuTexts(
+      {String? searchEmojiHintText,
+      String? searchGifHintText,
+      this.noRecents}) {
     this.searchEmojiHintText = searchEmojiHintText ?? "Search Emoji";
     this.searchGifHintText = searchGifHintText ?? "Search with Giphy";
   }

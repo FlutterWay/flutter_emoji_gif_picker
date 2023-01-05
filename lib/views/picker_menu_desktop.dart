@@ -41,11 +41,23 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
   MenuType menu = MenuType.emoji;
   TextEditingController searchController = TextEditingController();
   GiphyClient? client;
-  GiphyCollection? gifs;
   List<Emoji> filterEmojiEntities = [];
+  var gifScrollController = ScrollController();
+  List<GiphyGif> left = [];
+  List<GiphyGif> right = [];
+  double leftH = 0, rightH = 0;
+  String search = "";
+  int offset = 0;
+  int limit = 30;
   @override
   void initState() {
     super.initState();
+    gifScrollController.addListener(() {
+      if (gifScrollController.position.pixels >
+          gifScrollController.position.maxScrollExtent * 0.8) {
+        addGif();
+      }
+    });
     myfocus.requestFocus();
   }
 
@@ -60,9 +72,52 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
   }
 
   Future<void> searchGif(String search) async {
-    gifs =
-        search != "" ? await client!.search(search) : await client!.trending();
+    left = [];
+    right = [];
+    this.search = search;
+    leftH = 0;
+    rightH = 0;
+    offset = limit;
+    GiphyCollection gifs = search != ""
+        ? await client!.search(search, limit: limit)
+        : await client!.trending(limit: limit);
+    updateGifs(gifs);
     setState(() {});
+  }
+
+  bool adding = false;
+  Future<void> addGif() async {
+    if (!adding) {
+      adding = true;
+      GiphyCollection gifs = search != ""
+          ? await client!.search(search, limit: limit, offset: offset)
+          : await client!.trending(limit: limit, offset: offset);
+      updateGifs(gifs);
+      offset += limit;
+      adding = false;
+      setState(() {});
+    }
+  }
+
+  void updateGifs(GiphyCollection? gifs) {
+    if (gifs != null && gifs.data != null) {
+      for (var gif in gifs.data!) {
+        if (gif != null &&
+            gif.images != null &&
+            gif.images!.previewGif != null &&
+            gif.images!.previewGif!.url != null) {
+          double aspectRatio = int.parse(gif.images!.preview!.width!) /
+              int.parse(gif.images!.preview!.height!);
+          if (leftH == rightH || rightH > leftH) {
+            left.add(gif);
+            leftH += widget.sizes.width / 2 * aspectRatio;
+          } else {
+            right.add(gif);
+            rightH += widget.sizes.width / 2 * aspectRatio;
+          }
+        }
+      }
+    }
   }
 
   Future<void> searchEmoji(String search) async {
@@ -179,7 +234,7 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
               Expanded(
                 child: menu == MenuType.emoji || widget.giphyApiKey == null
                     ? emojiPicker()
-                    : gifPicker(),
+                    : viewGifs(widget.sizes.width - 20),
               ),
             ],
           )),
@@ -241,7 +296,7 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
         emojiSizeMax: 32 *
             (Platform.I.isIOS
                 ? 1.30
-                : 1.0), // Issue: https://github.com/flutter/flutter/issues/28894
+                : 1.0),
         verticalSpacing: 0,
         horizontalSpacing: 0,
         gridPadding: EdgeInsets.zero,
@@ -256,11 +311,12 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
         enableSkinTones: true,
         showRecentsTab: true,
         recentsLimit: 28,
-        noRecents: Text(
-          'No Recents',
-          style: widget.styles.menuUnSelectedTextStyle,
-          textAlign: TextAlign.center,
-        ), // Needs to be const Widget
+        noRecents: widget.texts.noRecents ??
+            const Text(
+              "No Recents",
+              style: TextStyle(fontSize: 20, color: Colors.grey),
+              textAlign: TextAlign.center,
+            ), // Needs to be const Widget
         loadingIndicator: const SizedBox.shrink(), // Needs to be const Widget
         tabIndicatorAnimDuration: kTabScrollDuration,
         categoryIcons: const CategoryIcons(),
@@ -269,46 +325,70 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
     );
   }
 
-  Widget gifPicker() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      padding: Platform.I.isMobile
-          ? const EdgeInsets.only(top: 4, left: 2, right: 2)
-          : null,
-      child: gifs == null
-          ? const Center(child: CircularProgressIndicator())
-          : GridView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: gifs!.data!.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: Platform.I.isDesktop ? 5 : 2,
-                  mainAxisSpacing: Platform.I.isDesktop ? 5 : 2),
-              itemBuilder: (context, index) {
-                return TextButton(
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: EdgeInsets.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: () {
-                    if (widget.onGifSelected != null) {
-                      widget.onGifSelected!(gifs!.data![index]);
-                    }
-                  },
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: Image.network(
-                      gifs!.data![index]!.images!.previewGif!.url!,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                );
-              },
-            ),
+  GiphyGif? hoveredGif;
+  Widget viewGifs(double width) {
+    return ListView(
+      controller: gifScrollController,
+      padding: EdgeInsets.zero,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            for (var gifs in [left, right])
+              SizedBox(
+                width: width / 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var gif in gifs)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 5),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onHover: (value) {
+                            if (value) {
+                              setState(() {
+                                hoveredGif = gif;
+                              });
+                            } else {
+                              setState(() {
+                                hoveredGif = null;
+                              });
+                            }
+                          },
+                          onPressed: () {
+                            if (widget.onGifSelected != null) {
+                              widget.onGifSelected!(gif);
+                            }
+                          },
+                          child: Container(
+                            width: width / 2,
+                            decoration: BoxDecoration(
+                                border: gif == hoveredGif
+                                    ? Border.all(
+                                        width: 3, color: Colors.greenAccent)
+                                    : null),
+                            child: Image.network(
+                              width: width / 2,
+                              gif.images!.previewGif!.url!,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              )
+          ],
+        ),
+      ],
     );
   }
 }

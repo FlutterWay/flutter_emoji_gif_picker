@@ -1,3 +1,4 @@
+import 'package:flutter_emoji_gif_picker/controller/keyboard_controller.dart';
 import '/controller/menu_state_controller.dart';
 import '/views/picker_menu.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_size/flutter_keyboard_size.dart';
 import 'package:get/get.dart';
 import 'package:platform_info/platform_info.dart';
-
 import '../models/menu_design.dart';
 
 class EmojiGifMenuStack extends StatelessWidget {
@@ -80,19 +80,26 @@ class EmojiGifMenuStack extends StatelessWidget {
   }
 
   void updateKeyboardStatus(ScreenHeight screenHeight) {
-    Get.find<MenuStateController>()
-        .updateKeyboardStatus(screenHeight.isOpen, screenHeight.keyboardHeight);
+    if (!GetInstance().isRegistered<KeyboardController>()) {
+      Get.put(KeyboardController());
+    }
+    Get.find<KeyboardController>().updateKeyboardStatus(
+        isOpen: screenHeight.isOpen, height: screenHeight.keyboardHeight);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<MenuStateController>().update();
+    });
   }
 
   Widget viewMobile(MenuStateController controller) {
     MenuSizes sizes;
-    if (controller.isKeyboardOpened) {
+    var keyboardController = Get.find<KeyboardController>();
+    if (keyboardController.isOpen) {
       sizes = MenuSizes(width: controller.menuSizes.width, height: 150);
     } else {
       sizes = controller.menuSizes;
     }
     return Positioned(
-      bottom: controller.isKeyboardOpened ? controller.keyboardHeight : 0,
+      bottom: keyboardController.isOpen ? keyboardController.height : 0,
       child: PickerMenu(
           sizes: sizes,
           onBackSpacePressed: controller.currentMenu!.onBackSpacePressed,

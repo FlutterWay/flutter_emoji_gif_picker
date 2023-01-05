@@ -297,7 +297,9 @@ EmojiGifPickerPanel.setSizes(MenuSizes(width: 2000, height: 500));
 ```dart
 EmojiGifPickerPanel.setTexts(MenuTexts(
       searchEmojiHintText: "Search Emoji?",
-      searchGifHintText: "Search with Giphy"));
+      searchGifHintText: "Search with Giphy"),
+      noRecents: Text("No Recent"),
+      );
 ```
 - Colors
 ```dart

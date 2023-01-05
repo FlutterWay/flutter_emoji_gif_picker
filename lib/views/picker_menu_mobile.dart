@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giphy_api_client/giphy_api_client.dart';
 import 'package:platform_info/platform_info.dart';
-
 import '../models/menu.dart';
 
 class PickerMenuMobile extends StatefulWidget {
@@ -44,12 +43,25 @@ class _PickerMenuState extends State<PickerMenuMobile> {
   GiphyCollection? gifs;
   late MobileSearchBarController mobileSearchBarController;
   List<Emoji> filterEmojiEntities = [];
+  var gifScrollController = ScrollController();
+  List<GiphyGif> left = [];
+  List<GiphyGif> right = [];
+  double leftH = 0, rightH = 0;
+  String search = "";
+  int offset = 0;
+  int limit = 30;
   @override
   void initState() {
     MobileSearchBarController searchBarController =
         Get.put(MobileSearchBarController());
     searchBarController.viewMobileSearchBar = false;
     mobileSearchBarController = Get.find<MobileSearchBarController>();
+    gifScrollController.addListener(() {
+      if (gifScrollController.position.pixels >
+          gifScrollController.position.maxScrollExtent * 0.8) {
+        addGif();
+      }
+    });
     super.initState();
     myfocus.requestFocus();
   }
@@ -66,9 +78,57 @@ class _PickerMenuState extends State<PickerMenuMobile> {
   }
 
   Future<void> searchGif(String search) async {
-    gifs =
-        search != "" ? await client!.search(search) : await client!.trending();
+    left = [];
+    right = [];
+    this.search = search;
+    leftH = 0;
+    rightH = 0;
+    offset = limit;
+    noMoreGif = false;
+    GiphyCollection gifs = search != ""
+        ? await client!.search(search, limit: limit)
+        : await client!.trending(limit: limit);
+    updateGifs(gifs);
     setState(() {});
+  }
+
+  bool adding = false;
+  bool noMoreGif = false;
+  Future<void> addGif() async {
+    if (!adding && !noMoreGif) {
+      adding = true;
+      GiphyCollection gifs = search != ""
+          ? await client!.search(search, limit: limit, offset: offset)
+          : await client!.trending(limit: limit, offset: offset);
+      if (gifs.data == null || gifs.data!.isEmpty) {
+        noMoreGif = true;
+      }
+      updateGifs(gifs);
+      offset += limit;
+      adding = false;
+      setState(() {});
+    }
+  }
+
+  void updateGifs(GiphyCollection? gifs) {
+    if (gifs != null && gifs.data != null) {
+      for (var gif in gifs.data!) {
+        if (gif != null &&
+            gif.images != null &&
+            gif.images!.previewGif != null &&
+            gif.images!.previewGif!.url != null) {
+          double aspectRatio = int.parse(gif.images!.preview!.width!) /
+              int.parse(gif.images!.preview!.height!);
+          if (leftH == rightH || rightH > leftH) {
+            left.add(gif);
+            leftH += (widget.sizes.width / 2) * aspectRatio;
+          } else {
+            right.add(gif);
+            rightH += (widget.sizes.width / 2) * aspectRatio;
+          }
+        }
+      }
+    }
   }
 
   Future<void> searchEmoji(String search) async {
@@ -90,7 +150,7 @@ class _PickerMenuState extends State<PickerMenuMobile> {
               Expanded(
                 child: menu == MenuType.emoji || widget.giphyApiKey == null
                     ? emojiPicker()
-                    : gifPicker(),
+                    : viewGifs(MediaQuery.of(context).size.width),
               ),
               Container(
                 width: widget.sizes.width,
@@ -309,16 +369,61 @@ class _PickerMenuState extends State<PickerMenuMobile> {
         enableSkinTones: true,
         showRecentsTab: true,
         recentsLimit: 28,
-        noRecents: Text(
-          'No Recents',
-          style: widget.styles.menuUnSelectedTextStyle,
-          textAlign: TextAlign.center,
-        ), // Needs to be const Widget
+        noRecents: widget.texts.noRecents ??
+            const Text(
+              "No Recents",
+              style: TextStyle(fontSize: 20, color: Colors.grey),
+              textAlign: TextAlign.center,
+            ), // Needs to be const Widget
         loadingIndicator: const SizedBox.shrink(), // Needs to be const Widget
         tabIndicatorAnimDuration: kTabScrollDuration,
         categoryIcons: const CategoryIcons(),
         buttonMode: ButtonMode.MATERIAL,
       ),
+    );
+  }
+
+  Widget viewGifs(double width) {
+    return ListView(
+      controller: gifScrollController,
+      padding: EdgeInsets.zero,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            for (var gifs in [left, right])
+              SizedBox(
+                width: width / 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var gif in gifs)
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 1, vertical: 1),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        onPressed: () {
+                          if (widget.onGifSelected != null) {
+                            widget.onGifSelected!(gif);
+                          }
+                        },
+                        child: Image.network(
+                          width: width / 2,
+                          gif.images!.previewGif!.url!,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                  ],
+                ),
+              )
+          ],
+        ),
+      ],
     );
   }
 
@@ -335,8 +440,8 @@ class _PickerMenuState extends State<PickerMenuMobile> {
               padding: EdgeInsets.zero,
               itemCount: gifs!.data!.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 3 / 2,
+                  crossAxisCount: 2,
+                  childAspectRatio: 1,
                   crossAxisSpacing: Platform.I.isDesktop ? 5 : 2,
                   mainAxisSpacing: Platform.I.isDesktop ? 5 : 2),
               itemBuilder: (context, index) {

@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_emoji_gif_picker/controller/keyboard_controller.dart';
 import '/controller/mobile_search_bar_controller.dart';
 import '/models/menu_design.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -75,17 +77,8 @@ class MenuStateController extends GetxController {
   MenuTexts menuTexts = MenuTexts();
   MenuSizes menuSizes = MenuSizes(width: 0, height: 0);
   String? giphyApiKey;
-  bool isKeyboardOpened = false;
-  double? keyboardHeight;
   MenuProperties? currentMenu;
   List<MenuProperties> menus = [];
-  void updateKeyboardStatus(bool status, double keyboardHeight) {
-    isKeyboardOpened = status;
-    if (this.keyboardHeight == null || this.keyboardHeight! < keyboardHeight) {
-      this.keyboardHeight = keyboardHeight;
-      if (keyboardHeight != 0) menuSizes.height = keyboardHeight;
-    }
-  }
 
   void setMenuProperties(MenuProperties menuProperties) {
     int index = menus.indexWhere((element) => element.id == menuProperties.id);
@@ -105,6 +98,7 @@ class MenuStateController extends GetxController {
       if (GetInstance().isRegistered<MobileSearchBarController>() &&
           Get.find<MobileSearchBarController>().viewMobileSearchBar) {
         Get.find<MobileSearchBarController>().close();
+        update();
         return false;
       } else {
         currentMenu!.unfocus();
@@ -135,12 +129,17 @@ class MenuStateController extends GetxController {
     return menus.singleWhere((element) => element.id == id);
   }
 
-  void open({bool openFromStack = true, required String id}) {
+  Future<void> open({bool openFromStack = true, required String id}) async {
     if (isOpened && currentMenu!.id != id) {
       close();
     }
+    if (Get.find<KeyboardController>().isOpen) {
+      await SystemChannels.textInput.invokeMethod('TextInput.hide');
+      await Future.delayed(const Duration(milliseconds: 200));
+    }
     currentMenu = menus.singleWhere((element) => element.id == id);
-    currentMenu!.focus();
     update();
+    await Future.delayed(const Duration(milliseconds: 200));
+    currentMenu!.focus();
   }
 }

@@ -9,6 +9,8 @@ export 'views/emoji_gif_menu_layout.dart';
 export 'views/keyboard_provider.dart';
 export 'views/emoji_gif_textfield.dart';
 export 'models/layout_mode.dart';
+import 'package:flutter_emoji_gif_picker/controller/keyboard_controller.dart';
+
 import '/models/menu_design.dart';
 import 'package:get/get.dart';
 import 'controller/menu_state_controller.dart';
@@ -32,6 +34,7 @@ class EmojiGifPickerPanel {
     String? giphyApiKey,
     Mode mode = Mode.dark,
   }) {
+    Get.put(KeyboardController());
     MenuStateController controller = Get.put(MenuStateController());
     if (sizes != null) {
       controller.menuSizes = sizes;

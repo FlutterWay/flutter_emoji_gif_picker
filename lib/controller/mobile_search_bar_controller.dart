@@ -11,7 +11,18 @@ class MobileSearchBarController extends GetxController {
 
   void open(FocusNode myfocus) {
     this.myfocus = myfocus;
+    myfocus.requestFocus();
     viewMobileSearchBar = true;
     update();
+  }
+
+  static bool checkFocus() {
+    if (GetInstance().isRegistered<MobileSearchBarController>() &&
+        Get.find<MobileSearchBarController>().myfocus != null &&
+        Get.find<MobileSearchBarController>().myfocus!.hasFocus) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

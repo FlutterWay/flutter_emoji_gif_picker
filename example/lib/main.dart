@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_emoji_gif_picker/flutter_emoji_gif_picker.dart';
 
 void main() {
-  EmojiGifPickerPanel.setup(
-      giphyApiKey: "yourgiphyapikey", mode: Mode.light);
+  EmojiGifPickerPanel.setup(giphyApiKey: "yourgiphyapikey", mode: Mode.light);
   runApp(const MyApp());
 }
 
