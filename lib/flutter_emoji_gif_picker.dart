@@ -113,7 +113,11 @@ class EmojiGifPickerPanel {
   static String? get giphyApiKey => Get.find<MenuStateController>().giphyApiKey;
 
   static void open(
-      {MenuPosition? position, bool? openFromStack, required String id}) {
+      {MenuPosition? position,
+      bool? openFromStack,
+      bool viewGif = true,
+      bool viewEmoji = true,
+      required String id}) {
     openFromStack ??= Platform.I.isMobile ? false : true;
     var controller = Get.find<MenuStateController>();
     if (Platform.I.isMobile) {
@@ -121,7 +125,11 @@ class EmojiGifPickerPanel {
     } else if (position != null) {
       controller.menuPosition = position;
     }
-    controller.open(openFromStack: openFromStack, id: id);
+    controller.open(
+        openFromStack: openFromStack,
+        id: id,
+        viewEmoji: viewEmoji,
+        viewGif: viewGif);
   }
 
   static void close() {

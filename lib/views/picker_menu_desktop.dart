@@ -16,6 +16,7 @@ class PickerMenuDesktop extends StatefulWidget {
   final void Function(Category? category, Emoji emoji)? onEmojiSelected;
   final void Function(GiphyGif? gif)? onGifSelected;
   final TextEditingController? textEditingController;
+  final bool viewEmoji, viewGif;
   PickerMenuDesktop(
       {super.key,
       MenuColors? colors,
@@ -26,6 +27,8 @@ class PickerMenuDesktop extends StatefulWidget {
       this.onGifSelected,
       this.textEditingController,
       this.giphyApiKey,
+      required this.viewEmoji,
+      required this.viewGif,
       required this.sizes})
       : colors = colors ?? MenuColors(),
         styles = styles ?? MenuStyles(),
@@ -52,12 +55,18 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
   @override
   void initState() {
     super.initState();
-    gifScrollController.addListener(() {
-      if (gifScrollController.position.pixels >
-          gifScrollController.position.maxScrollExtent * 0.8) {
-        addGif();
-      }
-    });
+    if (!widget.viewEmoji && widget.viewGif) {
+      menu = MenuType.gif;
+      setupGiphy();
+    }
+    if (widget.viewGif) {
+      gifScrollController.addListener(() {
+        if (gifScrollController.position.pixels >
+            gifScrollController.position.maxScrollExtent * 0.8) {
+          addGif();
+        }
+      });
+    }
     myfocus.requestFocus();
   }
 
@@ -139,35 +148,37 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        menu = MenuType.emoji;
-                        setState(() {});
-                      },
-                      child: Text(
-                        "Emoji",
-                        style: menu == MenuType.emoji
-                            ? widget.styles.menuSelectedTextStyle
-                            : widget.styles.menuUnSelectedTextStyle,
-                      )),
-                  if (widget.giphyApiKey != null)
-                    TextButton(
-                        onPressed: () {
-                          setState(() {
-                            menu = MenuType.gif;
-                            setupGiphy();
-                          });
-                        },
-                        child: Text(
-                          "GIF",
-                          style: menu == MenuType.gif
-                              ? widget.styles.menuSelectedTextStyle
-                              : widget.styles.menuUnSelectedTextStyle,
-                        ))
-                ],
-              ),
+              if (widget.viewEmoji && widget.viewGif)
+                Row(
+                  children: [
+                    if (widget.viewEmoji)
+                      TextButton(
+                          onPressed: () {
+                            menu = MenuType.emoji;
+                            setState(() {});
+                          },
+                          child: Text(
+                            "Emoji",
+                            style: menu == MenuType.emoji
+                                ? widget.styles.menuSelectedTextStyle
+                                : widget.styles.menuUnSelectedTextStyle,
+                          )),
+                    if (widget.giphyApiKey != null && widget.viewGif)
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              menu = MenuType.gif;
+                              setupGiphy();
+                            });
+                          },
+                          child: Text(
+                            "GIF",
+                            style: menu == MenuType.gif
+                                ? widget.styles.menuSelectedTextStyle
+                                : widget.styles.menuUnSelectedTextStyle,
+                          ))
+                  ],
+                ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Container(
@@ -293,10 +304,7 @@ class _PickerMenuState extends State<PickerMenuDesktop> {
             },
       config: Config(
         columns: 7,
-        emojiSizeMax: 32 *
-            (Platform.I.isIOS
-                ? 1.30
-                : 1.0),
+        emojiSizeMax: 32 * (Platform.I.isIOS ? 1.30 : 1.0),
         verticalSpacing: 0,
         horizontalSpacing: 0,
         gridPadding: EdgeInsets.zero,

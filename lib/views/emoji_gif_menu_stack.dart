@@ -66,6 +66,9 @@ class EmojiGifMenuStack extends StatelessWidget {
                                           controller.currentMenu!.onGifSelected,
                                       textEditingController: controller
                                           .currentMenu!.textEditingController,
+                                      viewEmoji:
+                                          controller.currentMenu!.viewEmoji,
+                                      viewGif: controller.currentMenu!.viewGif,
                                       sizes: controller.menuSizes,
                                       colors: controller.menuColors,
                                       styles: controller.menuStyles,
@@ -108,6 +111,8 @@ class EmojiGifMenuStack extends StatelessWidget {
           colors: controller.menuColors,
           textEditingController: controller.currentMenu!.textEditingController,
           styles: controller.menuStyles,
+          viewEmoji: controller.currentMenu!.viewEmoji,
+          viewGif: controller.currentMenu!.viewGif,
           texts: controller.menuTexts,
           giphyApiKey: controller.giphyApiKey),
     );

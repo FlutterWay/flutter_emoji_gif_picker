@@ -16,6 +16,7 @@ class MenuProperties {
   late dynamic Function(GiphyGif? gif) onGifSelected;
   FocusNode? focusNode;
   bool fromStack;
+  bool viewGif = true, viewEmoji = true;
 
   MenuProperties(
       {required this.id,
@@ -129,7 +130,11 @@ class MenuStateController extends GetxController {
     return menus.singleWhere((element) => element.id == id);
   }
 
-  Future<void> open({bool openFromStack = true, required String id}) async {
+  Future<void> open(
+      {bool openFromStack = true,
+      bool viewGif = true,
+      bool viewEmoji = true,
+      required String id}) async {
     if (isOpened && currentMenu!.id != id) {
       close();
     }
@@ -138,6 +143,8 @@ class MenuStateController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 200));
     }
     currentMenu = menus.singleWhere((element) => element.id == id);
+    currentMenu!.viewEmoji = viewEmoji;
+    currentMenu!.viewGif = viewGif;
     update();
     await Future.delayed(const Duration(milliseconds: 200));
     currentMenu!.focus();

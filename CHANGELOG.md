@@ -19,3 +19,8 @@
 * Fixed the problem that the menu remained small(mobile)
 * noRecents widget added in MenuTexts class
 * Fixed menu opening and closing issues
+
+## 0.1.1
+
+* viewEmoji and viewGif parameters added 
+

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_emoji_gif_picker/flutter_emoji_gif_picker.dart';
 
 void main() {
-  EmojiGifPickerPanel.setup(giphyApiKey: "yourgiphyapikey", mode: Mode.light);
+  EmojiGifPickerPanel.setup(
+      giphyApiKey: "kPBosXOgMBPUQQLSlKXQbKFn7EU2sh6p", mode: Mode.light);
   runApp(const MyApp());
 }
 
@@ -54,6 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   onGifSelected: (gif) {},
                   fromStack: false,
                   controller: controller,
+                  viewEmoji: true,
+                  viewGif: true,
                   icon: const Icon(Icons.emoji_emotions),
                 ),
                 EmojiGifPickerBuilder(

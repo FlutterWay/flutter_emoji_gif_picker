@@ -17,6 +17,7 @@ class PickerMenuMobile extends StatefulWidget {
   final void Function(Category? category, Emoji emoji)? onEmojiSelected;
   final void Function(GiphyGif? gif)? onGifSelected;
   final TextEditingController? textEditingController;
+  final bool viewEmoji, viewGif;
   PickerMenuMobile(
       {super.key,
       MenuColors? colors,
@@ -27,6 +28,8 @@ class PickerMenuMobile extends StatefulWidget {
       this.onGifSelected,
       this.textEditingController,
       this.giphyApiKey,
+      required this.viewEmoji,
+      required this.viewGif,
       required this.sizes})
       : colors = colors ?? MenuColors(),
         styles = styles ?? MenuStyles(),
@@ -56,12 +59,18 @@ class _PickerMenuState extends State<PickerMenuMobile> {
         Get.put(MobileSearchBarController());
     searchBarController.viewMobileSearchBar = false;
     mobileSearchBarController = Get.find<MobileSearchBarController>();
-    gifScrollController.addListener(() {
-      if (gifScrollController.position.pixels >
-          gifScrollController.position.maxScrollExtent * 0.8) {
-        addGif();
-      }
-    });
+    if (!widget.viewEmoji && widget.viewGif) {
+      menu = MenuType.gif;
+      setupGiphy();
+    }
+    if (widget.viewGif) {
+      gifScrollController.addListener(() {
+        if (gifScrollController.position.pixels >
+            gifScrollController.position.maxScrollExtent * 0.8) {
+          addGif();
+        }
+      });
+    }
     super.initState();
     myfocus.requestFocus();
   }
@@ -182,36 +191,38 @@ class _PickerMenuState extends State<PickerMenuMobile> {
                     color: widget.colors.buttonColor,
                   )),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              TextButton(
-                  onPressed: () {
-                    setState(() {
-                      menu = MenuType.emoji;
-                    });
-                  },
-                  child: Icon(
-                    Icons.emoji_emotions_outlined,
-                    size: widget.sizes.iconSize,
-                    color: menu == MenuType.emoji
-                        ? widget.colors.indicatorColor
-                        : widget.colors.buttonColor,
-                  )),
-              if (widget.giphyApiKey != null)
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        menu = MenuType.gif;
-                        setupGiphy();
-                      });
-                    },
-                    child: Icon(
-                      Icons.gif_box_outlined,
-                      size: widget.sizes.iconSize,
-                      color: menu == MenuType.gif
-                          ? widget.colors.indicatorColor
-                          : widget.colors.buttonColor,
-                    )),
-            ]),
+            if (widget.viewEmoji && widget.viewGif)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                if (widget.viewEmoji)
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          menu = MenuType.emoji;
+                        });
+                      },
+                      child: Icon(
+                        Icons.emoji_emotions_outlined,
+                        size: widget.sizes.iconSize,
+                        color: menu == MenuType.emoji
+                            ? widget.colors.indicatorColor
+                            : widget.colors.buttonColor,
+                      )),
+                if (widget.giphyApiKey != null && widget.viewGif)
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          menu = MenuType.gif;
+                          setupGiphy();
+                        });
+                      },
+                      child: Icon(
+                        Icons.gif_box_outlined,
+                        size: widget.sizes.iconSize,
+                        color: menu == MenuType.gif
+                            ? widget.colors.indicatorColor
+                            : widget.colors.buttonColor,
+                      )),
+              ]),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(

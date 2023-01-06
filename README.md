@@ -135,6 +135,7 @@ return WillPopScope(
 
 These widgets are required in order to show picker menu.
 Give an id to your picker widget this way you can use these widgets in multiple places on the same page. Don't forget to give your TextEditingController in  EmojiGifPickerIcon.
+With viewEmoji, viewGif parameters, you can control which menu opens or not.
 
 ### Icon
 ```dart
@@ -142,6 +143,8 @@ EmojiGifPickerIcon(
     id: "1",
     onGifSelected: (gif) {},
     controller: controller,
+    viewEmoji: true,
+    viewGif: true,
     icon: Icon(Icons.emoji_emotions),
   )
 ```

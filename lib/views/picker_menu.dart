@@ -18,6 +18,7 @@ class PickerMenu extends StatelessWidget {
   final void Function(Category? category, Emoji emoji)? onEmojiSelected;
   final void Function(GiphyGif? gif)? onGifSelected;
   final TextEditingController? textEditingController;
+  final bool viewEmoji, viewGif;
   PickerMenu(
       {super.key,
       MenuColors? colors,
@@ -28,6 +29,8 @@ class PickerMenu extends StatelessWidget {
       this.onGifSelected,
       this.textEditingController,
       this.giphyApiKey,
+      this.viewEmoji = true,
+      this.viewGif = true,
       required this.sizes})
       : colors = colors ?? MenuColors(),
         styles = styles ?? MenuStyles(),
@@ -46,6 +49,8 @@ class PickerMenu extends StatelessWidget {
             textEditingController: textEditingController,
             giphyApiKey: giphyApiKey,
             sizes: sizes,
+            viewEmoji: viewEmoji,
+            viewGif: viewGif,
           )
         : PickerMenuDesktop(
             colors: colors,
@@ -57,6 +62,8 @@ class PickerMenu extends StatelessWidget {
             textEditingController: textEditingController,
             giphyApiKey: giphyApiKey,
             sizes: sizes,
+            viewEmoji: viewEmoji,
+            viewGif: viewGif,
           );
   }
 }

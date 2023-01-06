@@ -24,6 +24,8 @@ class EmojiGifMenuColumn extends StatelessWidget {
               onEmojiSelected: controller.currentMenu!.onEmojiSelected,
               onGifSelected: controller.currentMenu!.onGifSelected,
               colors: controller.menuColors,
+              viewEmoji: controller.currentMenu!.viewEmoji,
+              viewGif: controller.currentMenu!.viewGif,
               textEditingController:
                   controller.currentMenu!.textEditingController,
               styles: controller.menuStyles,

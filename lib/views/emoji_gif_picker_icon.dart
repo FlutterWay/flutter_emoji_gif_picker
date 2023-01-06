@@ -20,6 +20,7 @@ class EmojiGifPickerIcon extends StatefulWidget {
   final Color hoveredBackgroundColor;
   final Color? backgroundColor;
   final bool fromStack;
+  final bool viewGif, viewEmoji;
   EmojiGifPickerIcon(
       {super.key,
       this.onBackSpacePressed,
@@ -28,6 +29,8 @@ class EmojiGifPickerIcon extends StatefulWidget {
       Widget? keyboardIcon,
       required this.id,
       this.controller,
+      this.viewGif = true,
+      this.viewEmoji = true,
       bool? fromStack,
       required this.icon,
       Color? hoveredBackgroundColor,
@@ -69,7 +72,10 @@ class _EmojiGifPickerIconState extends State<EmojiGifPickerIcon> {
             } else {
               setMenuItems();
               EmojiGifPickerPanel.open(
-                  openFromStack: widget.fromStack, id: widget.id);
+                  openFromStack: widget.fromStack,
+                  id: widget.id,
+                  viewEmoji: widget.viewEmoji,
+                  viewGif: widget.viewGif);
             }
           },
           onHover: (value) {
