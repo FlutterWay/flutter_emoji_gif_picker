@@ -24,3 +24,7 @@
 
 * viewEmoji and viewGif parameters added 
 
+## 0.1.2
+
+* document visuals improved 
+

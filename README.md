@@ -1,7 +1,7 @@
 # flutter_emoji_gif_picker
 An emoji picker that was designed based on WhatsApp's picker model. Provides same functionalities with an easy usage.
 
-<img width=1200 src="https://raw.githubusercontent.com/FlutterWay/files/main/slideForEmojiPicker.png"> 
+<img width=1200 src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_gif_views/emoji_gif_picker_poster.png"> 
 
 ## Features 
 - Includes Emoji Icon Widget, Textfield
@@ -23,7 +23,7 @@ An emoji picker that was designed based on WhatsApp's picker model. Provides sam
                 <table>
                  <tr>
                  	<h2>Mobile</h2>
-                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_mobile.gif" width="200" />
+                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_gif_views/emoji_mobile.gif" width="200" />
                   </tr>
                 </table>
             </td>   
@@ -31,7 +31,7 @@ An emoji picker that was designed based on WhatsApp's picker model. Provides sam
                 <table>
                  <tr>
                  	<h2>Desktop</h2>
-                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_desktop.gif" width="600" />
+                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_gif_views/emoji_desktop.gif" width="600" />
                   </tr>
                 </table>
             </td>   
@@ -119,7 +119,7 @@ EmojiGifPickerIcon(
 
 ## Back Button Problem
 
-<img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_backbutton.gif" width=200> 
+<img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_gif_views/emoji_backbutton.gif" width=200> 
 
 When the back button is pressed, if you want your emoji-gif picker menu to close instead of switching to another page, you must wrap your scaffold with WillPopScope to achieve this functionality
 
@@ -271,7 +271,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 <table>
                  <tr>
                  	<h2>Light</h2>
-                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/light.JPG"/>
+                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_gif_views/light.JPG"/>
                   </tr>
                 </table>
             </td>   
@@ -279,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 <table>
                  <tr>
                  	<h2>Dark</h2>
-                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/dark.JPG"/>
+                    <img src="https://raw.githubusercontent.com/FlutterWay/files/main/emoji_gif_views/dark.JPG"/>
                   </tr>
                 </table>
             </td>   
