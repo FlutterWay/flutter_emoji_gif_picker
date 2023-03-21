@@ -28,3 +28,8 @@
 
 * document visuals improved 
 
+## 0.1.3
+
+* libraries updated 
+
+

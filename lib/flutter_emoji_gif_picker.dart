@@ -5,6 +5,7 @@ export 'views/emoji_gif_picker_icon.dart';
 export 'views/emoji_gif_picker_builder.dart';
 export 'views/picker_menu.dart';
 export 'models/menu_design.dart';
+export 'models/mode.dart';
 export 'views/emoji_gif_menu_layout.dart';
 export 'views/keyboard_provider.dart';
 export 'views/emoji_gif_textfield.dart';
@@ -16,7 +17,7 @@ import 'package:get/get.dart';
 import 'controller/menu_state_controller.dart';
 import 'package:platform_info/platform_info.dart';
 
-enum Mode { dark, light }
+import 'models/mode.dart';
 
 class EmojiGifPickerPanel {
   /// You dont need to customize your emoji gif picker.
@@ -144,16 +145,16 @@ class EmojiGifPickerPanel {
     return Get.find<MenuStateController>().isMenuOpened(id);
   }
 
-  static void setMenuProperties(MenuProperties menuProperties) {
-    Get.find<MenuStateController>().setMenuProperties(menuProperties);
-  }
-
-  static MenuProperties getMenuProperties(String id) {
-    return Get.find<MenuStateController>().getMenuProperties(id);
-  }
-
-  static MenuProperties? get currentMenu =>
-      Get.find<MenuStateController>().currentMenu;
+  //static void setMenuProperties(MenuProperties menuProperties) {
+  //  Get.find<MenuStateController>().setMenuProperties(menuProperties);
+  //}
+//
+  //static MenuProperties getMenuProperties(String id) {
+  //  return Get.find<MenuStateController>().getMenuProperties(id);
+  //}
+//
+  //static MenuProperties? get currentMenu =>
+  //    Get.find<MenuStateController>().currentMenu;
 
   static String? get currentMenuId {
     return Get.find<MenuStateController>().isOpened

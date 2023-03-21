@@ -25,7 +25,7 @@ class EmojiGifTextField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.textAlignVertical,
     this.textDirection,
-    ToolbarOptions? toolbarOptions,
+    //ToolbarOptions? toolbarOptions,
     this.autofocus = false,
     this.obscuringCharacter = '•',
     this.obscureText = false,
@@ -48,6 +48,10 @@ class EmojiGifTextField extends StatelessWidget {
     this.cursorHeight,
     this.cursorRadius,
     this.cursorColor,
+    this.contextMenuBuilder,
+    this.spellCheckConfiguration,
+    this.magnifierConfiguration,
+    this.onTapOutside,
     this.selectionHeightStyle = ui.BoxHeightStyle.tight,
     this.selectionWidthStyle = ui.BoxWidthStyle.tight,
     this.keyboardAppearance,
@@ -144,13 +148,16 @@ class EmojiGifTextField extends StatelessWidget {
   final String? restorationId;
   final bool scribbleEnabled;
   final bool enableIMEPersonalizedLearning;
-
+  final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
+  final SpellCheckConfiguration? spellCheckConfiguration;
+  final TextMagnifierConfiguration? magnifierConfiguration;
+  final void Function(PointerDownEvent)? onTapOutside;
   @override
   Widget build(BuildContext context) {
     return EmojiGifPickerBuilder(
         id: id,
         builder: (isMenuOpened) {
-          ToolbarOptions? toolbarOptions;
+          //ToolbarOptions? toolbarOptions;
           bool? enableInteractiveSelection;
           bool readOnly = Platform.I.isMobile ? isMenuOpened : false;
           bool? showCursor = isMenuOpened ? true : null;
@@ -165,29 +172,29 @@ class EmojiGifTextField extends StatelessWidget {
               : null;
           enableInteractiveSelection =
               enableInteractiveSelection ?? (!readOnly || !obscureText);
-          toolbarOptions = (obscureText
-              ? (readOnly
-                  // No point in even offering "Select All" in a read-only obscured
-                  // field.
-                  ? const ToolbarOptions()
-                  // Writable, but obscured.
-                  : const ToolbarOptions(
-                      selectAll: true,
-                      paste: true,
-                    ))
-              : (readOnly
-                  // Read-only, not obscured.
-                  ? const ToolbarOptions(
-                      selectAll: true,
-                      copy: true,
-                    )
-                  // Writable, not obscured.
-                  : const ToolbarOptions(
-                      copy: true,
-                      cut: true,
-                      selectAll: true,
-                      paste: true,
-                    )));
+          //toolbarOptions = (obscureText
+          //    ? (readOnly
+          //        // No point in even offering "Select All" in a read-only obscured
+          //        // field.
+          //        ? const ToolbarOptions()
+          //        // Writable, but obscured.
+          //        : const ToolbarOptions(
+          //            selectAll: true,
+          //            paste: true,
+          //          ))
+          //    : (readOnly
+          //        // Read-only, not obscured.
+          //        ? const ToolbarOptions(
+          //            selectAll: true,
+          //            copy: true,
+          //          )
+          //        // Writable, not obscured.
+          //        : const ToolbarOptions(
+          //            copy: true,
+          //            cut: true,
+          //            selectAll: true,
+          //            paste: true,
+          //          )));
           return TextField(
             controller: controller,
             focusNode: focusNode,
@@ -203,6 +210,11 @@ class EmojiGifTextField extends StatelessWidget {
             autofocus: autofocus,
             obscuringCharacter: obscuringCharacter,
             obscureText: obscureText,
+            contextMenuBuilder: contextMenuBuilder,
+            spellCheckConfiguration: spellCheckConfiguration,
+            magnifierConfiguration: magnifierConfiguration,
+            onTapOutside: onTapOutside,
+            key: key,
             autocorrect: autocorrect,
             smartDashesType: smartDashesType,
             smartQuotesType: smartQuotesType,
@@ -211,7 +223,7 @@ class EmojiGifTextField extends StatelessWidget {
             minLines: minLines,
             expands: expands,
             readOnly: readOnly,
-            toolbarOptions: toolbarOptions,
+            //toolbarOptions: toolbarOptions,
             showCursor: showCursor,
             maxLength: maxLength,
             maxLengthEnforcement: maxLengthEnforcement,
