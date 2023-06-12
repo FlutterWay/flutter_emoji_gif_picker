@@ -378,7 +378,6 @@ class _PickerMenuState extends State<PickerMenuMobile> {
         skinToneDialogBgColor: Colors.white,
         skinToneIndicatorColor: Colors.grey,
         enableSkinTones: true,
-        showRecentsTab: true,
         recentsLimit: 28,
         noRecents: widget.texts.noRecents ??
             const Text(

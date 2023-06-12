@@ -4,7 +4,7 @@ version: 0.1.3
 homepage: https://github.com/FlutterWay/flutter_emoji_gif_picker
 
 environment:
-  sdk: '>=2.18.5 <3.0.0'
+  sdk: '>=2.18.5 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   giphy_api_client: ^0.1.3
   get: ^4.6.5
-  platform_info: ^3.2.0
+  platform_info: ^4.0.0
   emoji_picker_flutter: ^1.5.2
   flutter_keyboard_size: ^1.0.1
   
