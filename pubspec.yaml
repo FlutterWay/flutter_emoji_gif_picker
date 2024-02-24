@@ -14,7 +14,7 @@ dependencies:
   http: ^1.2.1
   meta: ^1.11.0
   platform_info: ^4.0.2
-  emoji_picker_flutter: 1.6.4
+  emoji_picker_flutter: ^1.6.4
   flutter_keyboard_size: ^1.0.1
   
 dev_dependencies:
