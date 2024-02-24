@@ -34,6 +34,12 @@
 
 ## 0.1.4
 
-* libraries updated 
+* Dart 3 & Flutter 3.10 compatibility
+
+## 0.1.5
+
+* packages updated
+* kotlin version updated
+* WillPopScope changed with PopScope in example project
 
 

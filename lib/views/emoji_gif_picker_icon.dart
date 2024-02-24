@@ -1,11 +1,13 @@
 import 'dart:math';
-import '../flutter_emoji_gif_picker.dart';
-import '/controller/menu_state_controller.dart';
+
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:giphy_api_client/giphy_api_client.dart';
 import 'package:platform_info/platform_info.dart';
+
+import '../flutter_emoji_gif_picker.dart';
+import '../giphy/models/gif.dart';
+import '/controller/menu_state_controller.dart';
 
 class EmojiGifPickerIcon extends StatefulWidget {
   /// If is there any textfield that should be worked with this icon, you must give it's TextEditingController and id as a parameter

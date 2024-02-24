@@ -41,10 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: (() async {
-          return EmojiGifPickerPanel.onWillPop();
-        }),
+    return PopScope(
+        canPop: EmojiGifPickerPanel.onWillPop(),
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             body: EmojiGifMenuLayout(

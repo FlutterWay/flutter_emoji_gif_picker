@@ -130,7 +130,13 @@ return WillPopScope(
         }),
         child: Scaffold(
 ```
+OR
 
+```dart
+return PopScope(
+        canPop: EmojiGifPickerPanel.onWillPop(),
+        child: Scaffold(
+```
 ## EmojiGifPickerIcon & EmojiGifTextfield
 
 These widgets are required in order to show picker menu.

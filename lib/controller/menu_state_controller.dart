@@ -1,12 +1,13 @@
-import 'package:flutter/services.dart';
-import 'package:flutter_emoji_gif_picker/controller/keyboard_controller.dart';
-import '/controller/mobile_search_bar_controller.dart';
-import '/models/menu_design.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_emoji_gif_picker/controller/keyboard_controller.dart';
 import 'package:get/get.dart';
-import 'package:giphy_api_client/giphy_api_client.dart';
 import 'package:platform_info/platform_info.dart';
+
+import '../giphy/models/gif.dart';
+import '/controller/mobile_search_bar_controller.dart';
+import '/models/menu_design.dart';
 
 class MenuProperties {
   String id;
