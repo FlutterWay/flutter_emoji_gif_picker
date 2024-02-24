@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_emoji_gif_picker/flutter_emoji_gif_picker.dart';
@@ -41,8 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-        canPop: EmojiGifPickerPanel.onWillPop(),
+    return WillPopScope(
+        onWillPop: (() async {
+          return EmojiGifPickerPanel.onWillPop();
+        }),
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             body: EmojiGifMenuLayout(

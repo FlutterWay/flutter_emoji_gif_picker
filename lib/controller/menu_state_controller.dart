@@ -95,6 +95,37 @@ class MenuStateController extends GetxController {
     }
   }
 
+  bool canPop() {
+    print("currentMenuCanpop:$currentMenu");
+    if (currentMenu != null) {
+      if (GetInstance().isRegistered<MobileSearchBarController>() &&
+          Get.find<MobileSearchBarController>().viewMobileSearchBar) {
+        return false;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  void onPopInvoked(BuildContext context) {
+    print("onPopInvoked");
+    if (currentMenu != null) {
+      if (GetInstance().isRegistered<MobileSearchBarController>() &&
+          Get.find<MobileSearchBarController>().viewMobileSearchBar) {
+        Get.find<MobileSearchBarController>().close();
+        update();
+      } else {
+        currentMenu!.unfocus();
+        close();
+      }
+    } else {
+      print("pop");
+      Navigator.pop(context);
+    }
+  }
+
   bool onWillPop() {
     if (currentMenu != null) {
       if (GetInstance().isRegistered<MobileSearchBarController>() &&
@@ -112,7 +143,7 @@ class MenuStateController extends GetxController {
     }
   }
 
-  void close() {
+  void close({bool updateState = true}) {
     currentMenu = null;
     update();
   }
@@ -137,7 +168,7 @@ class MenuStateController extends GetxController {
       bool viewEmoji = true,
       required String id}) async {
     if (isOpened && currentMenu!.id != id) {
-      close();
+      close(updateState: false);
     }
     if (Get.find<KeyboardController>().isOpen) {
       await SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -146,6 +177,7 @@ class MenuStateController extends GetxController {
     currentMenu = menus.singleWhere((element) => element.id == id);
     currentMenu!.viewEmoji = viewEmoji;
     currentMenu!.viewGif = viewGif;
+    print("currentMenuHere:$currentMenu");
     update();
     await Future.delayed(const Duration(milliseconds: 200));
     currentMenu!.focus();

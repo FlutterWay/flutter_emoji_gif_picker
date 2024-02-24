@@ -42,4 +42,8 @@
 * kotlin version updated
 * WillPopScope changed with PopScope in example project
 
+## 0.1.5
+
+* readme updated
+
 

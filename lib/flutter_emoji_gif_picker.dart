@@ -1,23 +1,24 @@
 library flutter_emoji_gif_picker;
 
-export 'views/emoji_gif_menu_stack.dart';
-export 'views/emoji_gif_picker_icon.dart';
-export 'views/emoji_gif_picker_builder.dart';
-export 'views/picker_menu.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_emoji_gif_picker/controller/keyboard_controller.dart';
+import 'package:get/get.dart';
+import 'package:platform_info/platform_info.dart';
+
+import '/models/menu_design.dart';
+import 'controller/menu_state_controller.dart';
+import 'models/mode.dart';
+
+export 'models/layout_mode.dart';
 export 'models/menu_design.dart';
 export 'models/mode.dart';
 export 'views/emoji_gif_menu_layout.dart';
-export 'views/keyboard_provider.dart';
+export 'views/emoji_gif_menu_stack.dart';
+export 'views/emoji_gif_picker_builder.dart';
+export 'views/emoji_gif_picker_icon.dart';
 export 'views/emoji_gif_textfield.dart';
-export 'models/layout_mode.dart';
-import 'package:flutter_emoji_gif_picker/controller/keyboard_controller.dart';
-
-import '/models/menu_design.dart';
-import 'package:get/get.dart';
-import 'controller/menu_state_controller.dart';
-import 'package:platform_info/platform_info.dart';
-
-import 'models/mode.dart';
+export 'views/keyboard_provider.dart';
+export 'views/picker_menu.dart';
 
 class EmojiGifPickerPanel {
   /// You dont need to customize your emoji gif picker.
@@ -74,6 +75,14 @@ class EmojiGifPickerPanel {
 
   static bool onWillPop() {
     return Get.find<MenuStateController>().onWillPop();
+  }
+
+  static bool canPop() {
+    return Get.find<MenuStateController>().canPop();
+  }
+
+  static void onPopInvoked(BuildContext context) {
+    return Get.find<MenuStateController>().onPopInvoked(context);
   }
 
   static setPosition(MenuPosition position) {
